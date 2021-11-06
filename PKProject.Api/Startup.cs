@@ -2,11 +2,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PKProject.Infrastructure.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +33,13 @@ namespace PKProject.Api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PKProject.Api", Version = "v1" });
+            });
+
+            services.AddDbContext<AppDbContext>(cfg =>
+            {
+                cfg.UseSqlServer(Configuration.GetConnectionString("AppDbConnectionString"),
+                    optionsbuilder => optionsbuilder.MigrationsAssembly("PKProject.Infrastructure"));
+
             });
         }
 

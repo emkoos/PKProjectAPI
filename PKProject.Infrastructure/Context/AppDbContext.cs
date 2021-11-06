@@ -114,7 +114,8 @@ namespace PKProject.Infrastructure.Context
             modelBuilder.Entity<Comment>()
                 .HasOne(s => s.User)
                 .WithMany(g => g.Comments)
-                .HasForeignKey(s => s.UserEmail);
+                .HasForeignKey(s => s.UserEmail)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Comment>()
                 .HasOne(s => s.Card)
