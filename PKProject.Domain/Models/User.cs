@@ -17,5 +17,7 @@ namespace PKProject.Domain.Models
             = new List<UsersTeam>();
         public ICollection<Comment> Comments { get; set; }
             = new List<Comment>();
+        public ICollection<Card> Cards { get; set; }
+            = new List<Card>();
     }
 }

@@ -12,6 +12,8 @@ namespace PKProject.Domain.Models
         public string Name { get; set; }
         public Guid TeamId { get; set; }
         public Team Team { get; set; }
+        public Guid BoardTypeId { get; set; }
+        public BoardType BoardType { get; set; }
         public ICollection<Card> Cards { get; set; }
             = new List<Card>();
     }

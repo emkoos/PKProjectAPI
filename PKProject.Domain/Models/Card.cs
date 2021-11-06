@@ -23,6 +23,6 @@ namespace PKProject.Domain.Models
         public DateTime DeadlineDate { get; set; }
         public int Priority { get; set; }
         public int Estimate { get; set; }
-        public string Attachement { get; set; }
+        public byte[] Attachement { get; set; }
     }
 }
