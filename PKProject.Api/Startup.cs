@@ -13,6 +13,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using PKProject.Domain.IRepositories;
+using PKProject.Infrastructure.Repositories;
+using MediatR;
+using PKProject.Application.Queries.BoardTypes;
 
 namespace PKProject.Api
 {
@@ -41,6 +46,10 @@ namespace PKProject.Api
                     optionsbuilder => optionsbuilder.MigrationsAssembly("PKProject.Infrastructure"));
 
             });
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddMediatR(typeof(GetAllBoardTypesQuery).Assembly);
+            services.AddScoped<IBoardTypeRepository, BoardTypeRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
