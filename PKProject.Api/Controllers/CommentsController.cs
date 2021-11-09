@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PKProject.Api.DTO;
+using PKProject.Application.Commands.Comments;
 using PKProject.Application.Queries.Comments;
 using System;
 using System.Collections.Generic;
@@ -87,6 +88,13 @@ namespace PKProject.Api.Controllers
             };
 
             return Ok(output);
+        }
+
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateComment([FromBody] CreateCommentCommand model)
+        {
+            await _mediator.Send(model);
+            return Created($"/comments/comment", null);
         }
     }
 }

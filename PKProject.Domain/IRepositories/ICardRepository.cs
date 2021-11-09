@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace PKProject.Domain.IRepositories
 {
-    class ICardRepository
+    public interface ICardRepository
     {
+        Task<bool> CardExist(Guid id);
     }
 }

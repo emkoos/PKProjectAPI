@@ -12,5 +12,7 @@ namespace PKProject.Domain.IRepositories
         Task<IEnumerable<Comment>> GetCommentsByUserEmail(string email);
         Task<IEnumerable<Comment>> GetCommentsByCardId(Guid id);
         Task<Comment> GetCommentById(Guid id);
+
+        Task<bool> CreateComment(Comment model);
     }
 }

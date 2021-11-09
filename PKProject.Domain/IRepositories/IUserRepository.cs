@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace PKProject.Domain.IRepositories
 {
-    class IUserRepository
+    public interface IUserRepository
     {
+        Task<bool> UserExist(string email);
     }
 }

@@ -33,5 +33,11 @@ namespace PKProject.Infrastructure.Repositories
         {
             return await _context.Comments.Where(x => x.Id == id).SingleOrDefaultAsync();
         }
+
+        public async Task<bool> CreateComment(Comment model)
+        {
+            await _context.Comments.AddAsync(model);
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }
