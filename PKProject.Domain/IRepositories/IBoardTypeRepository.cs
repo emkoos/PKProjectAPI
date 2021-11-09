@@ -10,5 +10,6 @@ namespace PKProject.Domain.IRepositories
     public interface IBoardTypeRepository
     {
         Task<IEnumerable<BoardType>> GetAllBoardTypes();
+        Task<BoardType> GetBoardTypeById(Guid id);
     }
 }

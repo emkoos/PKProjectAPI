@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PKProject.Api.DTO;
-using PKProject.Application.Commands.BoardTypes;
 using PKProject.Application.Queries.BoardTypes;
 using PKProject.Domain.Models;
 using System;
@@ -39,6 +38,26 @@ namespace PKProject.Api.Controllers
             {
                 BoardTypes = _mapper.Map<List<GetBoardTypeDto>>(boardTypes)
             };
+
+            return Ok(output);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<GetBoardTypeDto>> GetBoardType(Guid id)
+        {
+            var request = new GetBoardTypeQuery
+            {
+                Id = id
+            };
+
+            var boardType = await _mediator.Send(request);
+
+            if (boardType is null)
+            {
+                return NoContent();
+            }
+
+            var output = _mapper.Map<GetBoardTypeDto>(boardType);
 
             return Ok(output);
         }

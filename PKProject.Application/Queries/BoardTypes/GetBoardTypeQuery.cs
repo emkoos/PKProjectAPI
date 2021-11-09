@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace PKProject.Application.Queries.BoardTypes
 {
-    public class GetAllBoardTypesQuery : IRequest<IEnumerable<BoardType>>
+    public class GetBoardTypeQuery : IRequest<BoardType>
     {
+        public Guid Id { get; set; }
     }
 }

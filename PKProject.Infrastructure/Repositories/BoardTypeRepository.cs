@@ -23,5 +23,10 @@ namespace PKProject.Infrastructure.Repositories
         {
             return await _context.BoardTypes.ToListAsync();
         }
+
+        public async Task<BoardType> GetBoardTypeById(Guid id)
+        {
+            return await _context.BoardTypes.Where(x => x.Id == id).SingleOrDefaultAsync();
+        }
     }
 }
