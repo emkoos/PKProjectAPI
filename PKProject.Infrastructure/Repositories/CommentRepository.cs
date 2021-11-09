@@ -19,6 +19,11 @@ namespace PKProject.Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task<bool> CommentExist(Guid id)
+        {
+            return await _context.Comments.AnyAsync(c => c.Id == id);
+        }
+
         public async Task<IEnumerable<Comment>> GetCommentsByUserEmail(string email)
         {
             return await _context.Comments.Where(x => x.UserEmail == email).ToListAsync();
@@ -49,6 +54,14 @@ namespace PKProject.Infrastructure.Repositories
             }
 
             _context.Entry(comment).CurrentValues.SetValues(model);
+
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> DeleteComment(Guid id)
+        {
+            var comment = await _context.Comments.FirstOrDefaultAsync(x => x.Id == id);
+            _context.Comments.Remove(comment);
 
             return await _context.SaveChangesAsync() > 0;
         }

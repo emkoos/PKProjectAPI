@@ -103,5 +103,17 @@ namespace PKProject.Api.Controllers
             await _mediator.Send(model);
             return Ok();
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteComment(Guid id)
+        {
+            var model = new DeleteCommentCommand
+            {
+                Id = id
+            };
+
+            await _mediator.Send(model);
+            return Ok();
+        }
     }
 }

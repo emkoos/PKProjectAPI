@@ -27,6 +27,11 @@ namespace PKProject.Application.Commands.Comments
 
         public async Task<bool?> Handle(UpdateCommentCommand request, CancellationToken cancellationToken)
         {
+            if (!await _commentRepository.CommentExist(request.Id))
+            {
+                throw new Exception("Not Found Comment");
+            }
+
             if (!await _userRepository.UserExist(request.UserEmail))
             {
                 throw new Exception("Not Found User");
