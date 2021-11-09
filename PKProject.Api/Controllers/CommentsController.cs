@@ -96,5 +96,12 @@ namespace PKProject.Api.Controllers
             await _mediator.Send(model);
             return Created($"/comments/comment", null);
         }
+
+        [HttpPut("edit")]
+        public async Task<IActionResult> EditComment([FromBody] UpdateCommentCommand model)
+        {
+            await _mediator.Send(model);
+            return Ok();
+        }
     }
 }

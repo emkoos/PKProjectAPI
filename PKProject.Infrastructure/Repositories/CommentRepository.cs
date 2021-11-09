@@ -39,5 +39,18 @@ namespace PKProject.Infrastructure.Repositories
             await _context.Comments.AddAsync(model);
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<bool?> UpdateComment(Comment model)
+        {
+            var comment = await _context.Comments.FirstOrDefaultAsync(x => x.Id == model.Id);
+            if (comment is null)
+            {
+                return null;
+            }
+
+            _context.Entry(comment).CurrentValues.SetValues(model);
+
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

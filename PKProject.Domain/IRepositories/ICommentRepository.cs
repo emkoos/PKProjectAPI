@@ -14,5 +14,6 @@ namespace PKProject.Domain.IRepositories
         Task<Comment> GetCommentById(Guid id);
 
         Task<bool> CreateComment(Comment model);
+        Task<bool?> UpdateComment(Comment model);
     }
 }

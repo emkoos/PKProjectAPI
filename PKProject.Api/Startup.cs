@@ -51,6 +51,8 @@ namespace PKProject.Api
             services.AddMediatR(typeof(GetAllBoardTypesQuery).Assembly);
             services.AddScoped<IBoardTypeRepository, BoardTypeRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICardRepository, CardRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
