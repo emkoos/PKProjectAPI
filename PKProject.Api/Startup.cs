@@ -50,6 +50,7 @@ namespace PKProject.Api
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddMediatR(typeof(GetAllBoardTypesQuery).Assembly);
             services.AddScoped<IBoardTypeRepository, BoardTypeRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

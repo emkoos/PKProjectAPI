@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PKProject.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,10 @@ using System.Threading.Tasks;
 
 namespace PKProject.Domain.IRepositories
 {
-    class ICommentRepository
+    public interface ICommentRepository
     {
+        Task<IEnumerable<Comment>> GetCommentsByUserEmail(string email);
+        Task<IEnumerable<Comment>> GetCommentsByCardId(Guid id);
+        Task<Comment> GetCommentById(Guid id);
     }
 }

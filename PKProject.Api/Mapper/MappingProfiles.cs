@@ -13,6 +13,7 @@ namespace PKProject.Api.Mapper
         public MappingProfiles()
         {
             CreateMap<BoardType, GetBoardTypeDto>();
+            CreateMap<Comment, GetCommentDto>();
         }
     }
 }
