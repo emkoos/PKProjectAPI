@@ -53,6 +53,8 @@ namespace PKProject.Api
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICardRepository, CardRepository>();
+            services.AddScoped<IStatusRepository, StatusRepository>();
+            services.AddScoped<ICardRepository, CardRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
