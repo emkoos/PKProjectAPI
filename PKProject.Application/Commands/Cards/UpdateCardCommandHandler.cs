@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace PKProject.Application.Commands.Cards
 {
-    public class CreateCardCommandHandler : IRequestHandler<CreateCardCommand, bool>
+    public class UpdateCardCommandHandler : IRequestHandler<UpdateCardCommand, bool?>
     {
         public readonly IMediator _mediator;
         public readonly ICardRepository _cardRepository;
         public readonly IUserRepository _userRepository;
         public readonly IBoardRepository _boardRepository;
 
-        public CreateCardCommandHandler(IMediator mediator, ICardRepository cardRepository, IUserRepository userRepository, IBoardRepository boardRepository)
+        public UpdateCardCommandHandler(IMediator mediator, ICardRepository cardRepository, IUserRepository userRepository, IBoardRepository boardRepository)
         {
             _mediator = mediator;
             _cardRepository = cardRepository;
@@ -25,8 +25,13 @@ namespace PKProject.Application.Commands.Cards
             _boardRepository = boardRepository;
         }
 
-        public async Task<bool> Handle(CreateCardCommand request, CancellationToken cancellationToken)
+        public async Task<bool?> Handle(UpdateCardCommand request, CancellationToken cancellationToken)
         {
+            if (!await _cardRepository.CardExist(request.Id))
+            {
+                throw new Exception("Not Found Card");
+            }
+
             if (!await _userRepository.UserExist(request.UserEmail))
             {
                 throw new Exception("Not Found User");
@@ -44,7 +49,7 @@ namespace PKProject.Application.Commands.Cards
 
             var model = new Card
             {
-                Id = Guid.NewGuid(),
+                Id = request.Id,
                 Title = request.Title,
                 Description = request.Description,
                 UserEmail = request.UserEmail,
@@ -56,7 +61,7 @@ namespace PKProject.Application.Commands.Cards
                 Attachement = request.Attachement
             };
 
-            var result = await _cardRepository.CreateCard(model);
+            var result = await _cardRepository.UpdateCard(model);
 
             return result;
         }

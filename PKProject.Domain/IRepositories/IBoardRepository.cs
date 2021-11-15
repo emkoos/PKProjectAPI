@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace PKProject.Domain.IRepositories
 {
-    class IBoardRepostitory
+    public interface IBoardRepository
     {
+        Task<bool> BoardExist(Guid id);
     }
 }
