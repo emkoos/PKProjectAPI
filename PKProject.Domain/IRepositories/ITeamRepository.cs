@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace PKProject.Domain.IRepositories
 {
-    class ITeamRepository
+    public interface ITeamRepository
     {
+        Task<bool> TeamExist(Guid id);
     }
 }

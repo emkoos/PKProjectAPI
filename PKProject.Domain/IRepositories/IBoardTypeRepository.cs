@@ -9,6 +9,7 @@ namespace PKProject.Domain.IRepositories
 {
     public interface IBoardTypeRepository
     {
+        Task<bool> BoardTypeExist(Guid id);
         Task<IEnumerable<BoardType>> GetAllBoardTypes();
         Task<BoardType> GetBoardTypeById(Guid id);
     }

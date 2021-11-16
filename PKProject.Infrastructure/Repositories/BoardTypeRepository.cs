@@ -19,6 +19,11 @@ namespace PKProject.Infrastructure.Repositories
             _context = context;
         }
 
+        public async  Task<bool> BoardTypeExist(Guid id)
+        {
+            return await _context.BoardTypes.AnyAsync(c => c.Id == id);
+        }
+
         public async Task<IEnumerable<BoardType>> GetAllBoardTypes()
         {
             return await _context.BoardTypes.ToListAsync();

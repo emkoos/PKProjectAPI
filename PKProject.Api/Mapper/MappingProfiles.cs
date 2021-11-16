@@ -17,6 +17,7 @@ namespace PKProject.Api.Mapper
             CreateMap<Status, GetStatusDto>();
             CreateMap<Card, GetCardDto>();
             CreateMap<Column, GetColumnDto>();
+            CreateMap<Board, GetBoardDto>();
         }
     }
 }
