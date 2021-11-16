@@ -30,9 +30,9 @@ namespace PKProject.Infrastructure.Repositories
             return await _context.Cards.Where(x => x.Id == id).SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Card>> GetCardsByBoardId(Guid id)
+        public async Task<IEnumerable<Card>> GetCardsByColumnId(Guid id)
         {
-            return await _context.Cards.Where(x => x.BoardId == id).ToListAsync();
+            return await _context.Cards.Where(x => x.ColumnId == id).ToListAsync();
         }
 
         public async Task<IEnumerable<Card>> GetCardsByUserEmail(string email)

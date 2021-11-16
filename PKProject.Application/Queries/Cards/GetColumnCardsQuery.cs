@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace PKProject.Application.Queries.Cards
 {
-    public class GetBoardCardsQuery : IRequest<IEnumerable<Card>>
+    public class GetColumnCardsQuery : IRequest<IEnumerable<Card>>
     {
-        public Guid BoardId { get; set; }
+        public Guid ColumnId { get; set; }
     }
 }

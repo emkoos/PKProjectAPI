@@ -66,7 +66,7 @@ namespace PKProject.Infrastructure.Migrations
                     b.Property<byte[]>("Attachement")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<Guid>("BoardId")
+                    b.Property<Guid>("ColumnId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DeadlineDate")
@@ -93,13 +93,35 @@ namespace PKProject.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BoardId");
+                    b.HasIndex("ColumnId");
 
                     b.HasIndex("StatusId");
 
                     b.HasIndex("UserEmail");
 
                     b.ToTable("Cards");
+                });
+
+            modelBuilder.Entity("PKProject.Domain.Models.Column", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BoardId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BoardId");
+
+                    b.ToTable("Columns");
                 });
 
             modelBuilder.Entity("PKProject.Domain.Models.Comment", b =>
@@ -216,9 +238,9 @@ namespace PKProject.Infrastructure.Migrations
 
             modelBuilder.Entity("PKProject.Domain.Models.Card", b =>
                 {
-                    b.HasOne("PKProject.Domain.Models.Board", "Board")
+                    b.HasOne("PKProject.Domain.Models.Column", "Column")
                         .WithMany("Cards")
-                        .HasForeignKey("BoardId")
+                        .HasForeignKey("ColumnId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -234,11 +256,22 @@ namespace PKProject.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Board");
+                    b.Navigation("Column");
 
                     b.Navigation("Status");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PKProject.Domain.Models.Column", b =>
+                {
+                    b.HasOne("PKProject.Domain.Models.Board", "Board")
+                        .WithMany("Columns")
+                        .HasForeignKey("BoardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Board");
                 });
 
             modelBuilder.Entity("PKProject.Domain.Models.Comment", b =>
@@ -281,7 +314,7 @@ namespace PKProject.Infrastructure.Migrations
 
             modelBuilder.Entity("PKProject.Domain.Models.Board", b =>
                 {
-                    b.Navigation("Cards");
+                    b.Navigation("Columns");
                 });
 
             modelBuilder.Entity("PKProject.Domain.Models.BoardType", b =>
@@ -292,6 +325,11 @@ namespace PKProject.Infrastructure.Migrations
             modelBuilder.Entity("PKProject.Domain.Models.Card", b =>
                 {
                     b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("PKProject.Domain.Models.Column", b =>
+                {
+                    b.Navigation("Cards");
                 });
 
             modelBuilder.Entity("PKProject.Domain.Models.Status", b =>

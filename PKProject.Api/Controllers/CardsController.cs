@@ -67,12 +67,12 @@ namespace PKProject.Api.Controllers
             return Ok(output);
         }
 
-        [HttpGet("Board/{boardId}")]
-        public async Task<ActionResult<GetCardsDto>> GetBoardCards(Guid boardId)
+        [HttpGet("Column/{columnId}")]
+        public async Task<ActionResult<GetCardsDto>> GetColumnCards(Guid columnId)
         {
-            var request = new GetBoardCardsQuery
+            var request = new GetColumnCardsQuery
             {
-                BoardId = boardId
+                ColumnId = columnId
             };
 
             var cards = await _mediator.Send(request);

@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 
 namespace PKProject.Application.Queries.Cards
 {
-    public class GetBoardCardsHandler : IRequestHandler<GetBoardCardsQuery, IEnumerable<Card>>
+    public class GetColumnCardsHandler : IRequestHandler<GetColumnCardsQuery, IEnumerable<Card>>
     {
         private readonly ICardRepository _repository;
 
-        public GetBoardCardsHandler(ICardRepository repository)
+        public GetColumnCardsHandler(ICardRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task<IEnumerable<Card>> Handle(GetBoardCardsQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Card>> Handle(GetColumnCardsQuery request, CancellationToken cancellationToken)
         {
-            var cards = await _repository.GetCardsByBoardId(request.BoardId);
+            var cards = await _repository.GetCardsByColumnId(request.ColumnId);
 
             return cards;
         }

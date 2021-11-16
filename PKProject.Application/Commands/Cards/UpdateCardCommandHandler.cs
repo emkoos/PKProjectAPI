@@ -37,11 +37,6 @@ namespace PKProject.Application.Commands.Cards
                 throw new Exception("Not Found User");
             }
 
-            if (!await _boardRepository.BoardExist(request.BoardId))
-            {
-                throw new Exception("Not Found Board");
-            }
-
             if (String.IsNullOrWhiteSpace(request.Description))
             {
                 request.Description = "";
@@ -53,7 +48,7 @@ namespace PKProject.Application.Commands.Cards
                 Title = request.Title,
                 Description = request.Description,
                 UserEmail = request.UserEmail,
-                BoardId = request.BoardId,
+                ColumnId = request.ColumnId,
                 StatusId = request.StatusId,
                 DeadlineDate = request.DeadlineDate,
                 Priority = request.Priority,

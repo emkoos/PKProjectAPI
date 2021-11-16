@@ -109,6 +109,26 @@ namespace PKProject.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Columns",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Position = table.Column<int>(type: "int", nullable: false),
+                    BoardId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Columns", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Columns_Boards_BoardId",
+                        column: x => x.BoardId,
+                        principalTable: "Boards",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cards",
                 columns: table => new
                 {
@@ -116,7 +136,7 @@ namespace PKProject.Infrastructure.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserEmail = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    BoardId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ColumnId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DeadlineDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Priority = table.Column<int>(type: "int", nullable: false),
@@ -127,9 +147,9 @@ namespace PKProject.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Cards", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cards_Boards_BoardId",
-                        column: x => x.BoardId,
-                        principalTable: "Boards",
+                        name: "FK_Cards_Columns_ColumnId",
+                        column: x => x.ColumnId,
+                        principalTable: "Columns",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -184,9 +204,9 @@ namespace PKProject.Infrastructure.Migrations
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cards_BoardId",
+                name: "IX_Cards_ColumnId",
                 table: "Cards",
-                column: "BoardId");
+                column: "ColumnId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cards_StatusId",
@@ -197,6 +217,11 @@ namespace PKProject.Infrastructure.Migrations
                 name: "IX_Cards_UserEmail",
                 table: "Cards",
                 column: "UserEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Columns_BoardId",
+                table: "Columns",
+                column: "BoardId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_CardId",
@@ -226,13 +251,16 @@ namespace PKProject.Infrastructure.Migrations
                 name: "Cards");
 
             migrationBuilder.DropTable(
-                name: "Boards");
+                name: "Columns");
 
             migrationBuilder.DropTable(
                 name: "Statuses");
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Boards");
 
             migrationBuilder.DropTable(
                 name: "BoardTypes");

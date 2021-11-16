@@ -11,7 +11,7 @@ namespace PKProject.Api.DTO
         public string Title { get; set; }
         public string Description { get; set; }
         public string UserEmail { get; set; }
-        public Guid BoardId { get; set; }
+        public Guid ColumnId { get; set; }
         public Guid StatusId { get; set; }
         public DateTime DeadlineDate { get; set; }
         public int Priority { get; set; }

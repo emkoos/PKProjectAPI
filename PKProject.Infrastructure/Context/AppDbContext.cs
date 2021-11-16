@@ -18,6 +18,7 @@ namespace PKProject.Infrastructure.Context
         public DbSet<Board> Boards { get; set; }
         public DbSet<BoardType> BoardTypes { get; set; }
         public DbSet<Card> Cards { get; set; }
+        public DbSet<Column> Columns { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Team> Teams { get; set; }
@@ -42,7 +43,7 @@ namespace PKProject.Infrastructure.Context
                 .HasForeignKey(ts => ts.TeamId);
 
             modelBuilder.Entity<Board>()
-                .HasMany(s => s.Cards)
+                .HasMany(s => s.Columns)
                 .WithOne(g => g.Board)
                 .IsRequired();
 
@@ -86,6 +87,11 @@ namespace PKProject.Infrastructure.Context
                 .WithOne(g => g.User)
                 .IsRequired();
 
+            modelBuilder.Entity<Column>()
+                .HasMany(s => s.Cards)
+                .WithOne(g => g.Column)
+                .IsRequired();
+
             modelBuilder.Entity<Board>()
                 .HasOne(s => s.Team)
                 .WithMany(g => g.Boards)
@@ -102,9 +108,9 @@ namespace PKProject.Infrastructure.Context
                 .HasForeignKey(s => s.UserEmail);
 
             modelBuilder.Entity<Card>()
-                .HasOne(s => s.Board)
+                .HasOne(s => s.Column)
                 .WithMany(g => g.Cards)
-                .HasForeignKey(s => s.BoardId);
+                .HasForeignKey(s => s.ColumnId);
 
             modelBuilder.Entity<Card>()
                 .HasOne(s => s.Status)
@@ -131,6 +137,11 @@ namespace PKProject.Infrastructure.Context
                 .HasOne(s => s.Team)
                 .WithMany(g => g.UserTeams)
                 .HasForeignKey(s => s.TeamId);
+
+            modelBuilder.Entity<Column>()
+                .HasOne(s => s.Board)
+                .WithMany(g => g.Columns)
+                .HasForeignKey(s => s.BoardId);
         }
     }
 }

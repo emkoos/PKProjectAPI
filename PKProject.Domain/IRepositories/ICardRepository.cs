@@ -11,7 +11,7 @@ namespace PKProject.Domain.IRepositories
     {
         Task<bool> CardExist(Guid id);
         Task<Card> GetCardById(Guid id);
-        Task<IEnumerable<Card>> GetCardsByBoardId(Guid id);
+        Task<IEnumerable<Card>> GetCardsByColumnId(Guid id);
         Task<IEnumerable<Card>> GetCardsByUserEmail(string email);
         Task<bool> CreateCard(Card model);
         Task<bool?> UpdateCard(Card model);
