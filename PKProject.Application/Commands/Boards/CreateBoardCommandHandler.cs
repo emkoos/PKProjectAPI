@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PKProject.Application.Commands.Boards
 {
-    public class CreateBoardCommandHandler : IRequestHandler<CreateBoardCommand, bool>
+    public class CreateBoardCommandHandler : IRequestHandler<CreateBoardCommand, Guid>
     {
         public readonly IMediator _mediator;
         public readonly ITeamRepository _teamRepository;
@@ -25,7 +25,7 @@ namespace PKProject.Application.Commands.Boards
             _boardTypeRepository = boardTypeRepository;
         }
 
-        public async Task<bool> Handle(CreateBoardCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateBoardCommand request, CancellationToken cancellationToken)
         {
 
             if (!await _teamRepository.TeamExist(request.TeamId))
@@ -48,7 +48,7 @@ namespace PKProject.Application.Commands.Boards
 
             var result = await _boardRepository.CreateBoard(model);
 
-            return result;
+            return model.Id;
         }
     }
 }

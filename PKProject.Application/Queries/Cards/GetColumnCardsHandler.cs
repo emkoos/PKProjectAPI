@@ -22,6 +22,10 @@ namespace PKProject.Application.Queries.Cards
         public async Task<IEnumerable<Card>> Handle(GetColumnCardsQuery request, CancellationToken cancellationToken)
         {
             var cards = await _repository.GetCardsByColumnId(request.ColumnId);
+            foreach (var card in cards)
+            {
+                card.DeadlineDate = card.DeadlineDate.Date;
+            }
 
             return cards;
         }
