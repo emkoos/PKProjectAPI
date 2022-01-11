@@ -19,5 +19,4 @@ namespace PKProject.Application.Commands.Cards
         public int Estimate { get; set; }
         public byte[] Attachement { get; set; }
     }
-
 }

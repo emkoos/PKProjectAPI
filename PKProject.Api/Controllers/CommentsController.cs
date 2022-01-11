@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PKProject.Api.DTO;
 using PKProject.Application.Commands.Comments;
@@ -7,12 +10,15 @@ using PKProject.Application.Queries.Comments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace PKProject.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CommentsController : Controller
     {
         private readonly IMediator _mediator;
@@ -91,9 +97,23 @@ namespace PKProject.Api.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> CreateComment([FromBody] CreateCommentCommand model)
+        public async Task<IActionResult> CreateComment([FromBody] CreateNewCommentCommand model)
         {
-            await _mediator.Send(model);
+            var loggedInUser = User.FindFirstValue(ClaimTypes.Email);
+
+            if (loggedInUser is null)
+            {
+                return Unauthorized();
+            }
+
+            var newModel = new CreateCommentCommand
+            {
+                UserEmail = loggedInUser,
+                CardId = model.CardId,
+                Content = model.Content
+            };
+
+            await _mediator.Send(newModel);
             return Created($"/comments/comment", null);
         }
 

@@ -74,5 +74,7 @@ namespace PKProject.Infrastructure.Repositories
         {
             return await _context.Teams.AnyAsync(c => c.Id == id);
         }
+
+      
     }
 }

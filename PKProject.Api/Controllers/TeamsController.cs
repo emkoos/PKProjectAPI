@@ -24,19 +24,23 @@ namespace PKProject.Api.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-        private readonly UserManager<IdentityUser> _userManager;
 
-        public TeamsController(IMediator mediator, IMapper mapper, UserManager<IdentityUser> userManager)
+        public TeamsController(IMediator mediator, IMapper mapper)
         {
             _mediator = mediator;
             _mapper = mapper;
-            _userManager = userManager;
         }
 
         [HttpGet("teams/my")]
         public async Task<ActionResult<GetTeamsDto>> GetLoggedInUserTeams()
         {
             var loggedInUser = User.FindFirstValue(ClaimTypes.Email);
+
+            if (loggedInUser is null)
+            {
+                return Unauthorized();
+            }
+
             var teams = await _mediator.Send(new GetLoggedInUserTeamsQuery() { Email = loggedInUser });
             
             if (!teams.Any())

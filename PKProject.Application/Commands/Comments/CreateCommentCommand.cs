@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace PKProject.Application.Commands.Comments
 {
+    public class CreateNewCommentCommand
+    {
+        public Guid CardId { get; set; }
+        public string Content { get; set; }
+    }
+
     public class CreateCommentCommand : IRequest<bool>
     {
         public string UserEmail { get; set; }
