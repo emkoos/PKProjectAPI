@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using PKProject.Domain.IRepositories;
+using PKProject.Domain.Models;
 using PKProject.Infrastructure.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,6 +19,36 @@ namespace PKProject.Infrastructure.Repositories
         public TeamRepository(AppDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<IEnumerable<Team>> GetLoggedInUserTeams(string email)
+        {
+            var userTeams = await _context.UsersTeams.Where(x => x.UserEmail == email).ToListAsync();
+
+            var teams = new List<Team>();
+
+            foreach (var item in userTeams)
+            {
+                var team = await _context.Teams.Where(x => x.Id == item.TeamId).FirstOrDefaultAsync();
+                teams.Add(team);
+            }
+
+            return teams;
+        }
+
+        public async Task<IEnumerable<User>> GetUsersByTeamId(Guid teamId)
+        {
+            var userTeams = await _context.UsersTeams.Where(x => x.TeamId == teamId).ToListAsync();
+            
+            var users = new List<User>();
+
+            foreach (var item in userTeams)
+            {
+                var user = await _context.Users.Where(x => x.Email == item.UserEmail).FirstOrDefaultAsync();
+                users.Add(user);
+            }
+
+            return users;
         }
 
         public async Task<bool> TeamExist(Guid id)

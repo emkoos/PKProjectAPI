@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PKProject.Api.DTO;
+using PKProject.Api.DTO.Users;
 using PKProject.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ namespace PKProject.Api.Mapper
             CreateMap<Card, GetCardDto>();
             CreateMap<Column, GetColumnDto>();
             CreateMap<Board, GetBoardDto>();
+            CreateMap<Team, GetTeamDto>();
+            CreateMap<User, GetUserDto>();
         }
     }
 }

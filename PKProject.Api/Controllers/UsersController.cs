@@ -15,6 +15,7 @@ using PKProject.Infrastructure.Context;
 using Microsoft.AspNetCore.Identity;
 using PKProject.Api.Configuration;
 using PKProject.Api.DTO.Users;
+using PKProject.Application.Commands.Users;
 
 namespace PKProject.Api.Controllers
 {
@@ -24,12 +25,18 @@ namespace PKProject.Api.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager; 
         private readonly JwtConfig _jwtConfig;
+        private readonly IMediator _mediator;
 
-        public UsersController(UserManager<IdentityUser> userManager, IOptions<JwtConfig> options)
+        public UsersController(UserManager<IdentityUser> userManager, IOptions<JwtConfig> options, IMediator mediator)
         {
             _userManager = userManager;
             _jwtConfig = options.Value;
+            _mediator = mediator;
         }
+
+
+
+        //Dodac dodawanie User przy okazji.
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserRegistrationDto user)
@@ -49,12 +56,27 @@ namespace PKProject.Api.Controllers
                         Success = false
                     });
                 }
-
                 var newUser = new IdentityUser() { Email = user.Email, UserName = user.Username };
                 var isCreated = await _userManager.CreateAsync(newUser, user.Password);
                 if (isCreated.Succeeded)
                 {
                     var jwtToken = GenerateJwtToken(newUser);
+
+                    var newUserModel = new CreateUserCommand
+                    {
+                        Email = user.Email,
+                        Username = user.Username,
+                        Firstname = user.Firstname,
+                        Lastname = user.Lastname,
+                        Photo = user.Photo
+                    };
+
+                    var result = await _mediator.Send(newUserModel);
+                    
+                    if(result == false)
+                    {
+                        return BadRequest("Something wrong with adding new user");
+                    }
 
                     return Ok(new RegistrationResult()
                     {
