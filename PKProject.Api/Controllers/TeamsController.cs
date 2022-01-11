@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PKProject.Api.DTO;
 using PKProject.Api.DTO.Users;
+using PKProject.Application.Commands.Teams;
 using PKProject.Application.Queries.Statuses;
 using PKProject.Application.Queries.Teams;
 using System;
@@ -32,7 +33,7 @@ namespace PKProject.Api.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet("team/my")]
+        [HttpGet("teams/my")]
         public async Task<ActionResult<GetTeamsDto>> GetLoggedInUserTeams()
         {
             var loggedInUser = User.FindFirstValue(ClaimTypes.Email);
@@ -51,7 +52,7 @@ namespace PKProject.Api.Controllers
             return Ok(output);
         }
 
-        [HttpGet("team/users/{teamId}")]
+        [HttpGet("teams/users/{teamId}")]
         public async Task<ActionResult<GetUsersDto>> GetUsersByTeamId(Guid teamId)
         {
             var users = await _mediator.Send(new GetUsersByTeamIdQuery() { TeamId = teamId });
@@ -67,6 +68,25 @@ namespace PKProject.Api.Controllers
             };
 
             return Ok(output);
+        }
+
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateTeam([FromBody] CreateTeamCommand model)
+        {
+            await _mediator.Send(model);
+            return Created($"/teams/team", null);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTeam(Guid id)
+        {
+            var model = new DeleteTeamCommand
+            {
+                Id = id
+            };
+
+            await _mediator.Send(model);
+            return Ok();
         }
     }
 }

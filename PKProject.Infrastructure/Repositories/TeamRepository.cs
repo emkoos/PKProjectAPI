@@ -21,6 +21,20 @@ namespace PKProject.Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task<bool> CreateTeam(Team model)
+        {
+            await _context.Teams.AddAsync(model);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> DeleteTeam(Guid teamId)
+        {
+            var team = await _context.Teams.FirstOrDefaultAsync(x => x.Id == teamId);
+            _context.Teams.Remove(team);
+
+            return await _context.SaveChangesAsync() > 0;
+        }
+
         public async Task<IEnumerable<Team>> GetLoggedInUserTeams(string email)
         {
             var userTeams = await _context.UsersTeams.Where(x => x.UserEmail == email).ToListAsync();

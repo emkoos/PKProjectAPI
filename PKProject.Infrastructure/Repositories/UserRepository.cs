@@ -25,6 +25,19 @@ namespace PKProject.Infrastructure.Repositories
             return await _context.SaveChangesAsync() > 0;
         }
 
+        public async Task<bool> UpdateUser(User user)
+        {
+            var editUser = await _context.Users.FirstOrDefaultAsync(x => x.Email == user.Email);
+            if (editUser is null)
+            {
+                return false;
+            }
+
+            _context.Entry(editUser).CurrentValues.SetValues(user);
+
+            return await _context.SaveChangesAsync() > 0;
+        }
+
         public async Task<bool> UserExist(string email)
         {
             return await _context.Users.AnyAsync(e => e.Email == email);

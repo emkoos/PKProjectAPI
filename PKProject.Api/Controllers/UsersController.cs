@@ -34,9 +34,23 @@ namespace PKProject.Api.Controllers
             _mediator = mediator;
         }
 
+        [HttpPut("edit-profile")]
+        public async Task<IActionResult> EditProfile([FromBody] UpdateUserCommand user)
+        {
+            var editUser = await _userManager.FindByEmailAsync(user.Email);
+            if (editUser is null)
+            {
+                return NotFound("Not found user with this email.");
+            }
 
+            editUser.Email = user.Email;
+            editUser.UserName = user.Username;
 
-        //Dodac dodawanie User przy okazji.
+            await _userManager.UpdateAsync(editUser);
+
+            await _mediator.Send(user);
+            return Ok();
+        }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserRegistrationDto user)
