@@ -12,10 +12,10 @@ namespace PKProject.Application.Commands.Comments
 {
     public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand, bool>
     {
-        public readonly IMediator _mediator;
-        public readonly ICommentRepository _commentRepository;
-        public readonly IUserRepository _userRepository;
-        public readonly ICardRepository _cardRepository;
+        private readonly IMediator _mediator;
+        private readonly ICommentRepository _commentRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly ICardRepository _cardRepository;
 
         public CreateCommentCommandHandler(IMediator mediator, ICommentRepository commentRepository, IUserRepository userRepository, ICardRepository cardRepository)
         {

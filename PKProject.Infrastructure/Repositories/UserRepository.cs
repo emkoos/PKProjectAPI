@@ -19,6 +19,24 @@ namespace PKProject.Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task<bool> AddUserToTeam(string email, Guid teamId)
+        {
+            var result = await _context.UsersTeams.FirstOrDefaultAsync(x => x.UserEmail == email && x.TeamId == teamId);
+            if (result != null)
+            {
+                return false;
+            }
+
+            var model = new UsersTeam
+            {
+                UserEmail = email,
+                TeamId = teamId
+            };
+
+            await _context.UsersTeams.AddAsync(model);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
         public async Task<bool> CreateUser(User user)
         {
             await _context.Users.AddAsync(user);
@@ -41,6 +59,16 @@ namespace PKProject.Infrastructure.Repositories
         public async Task<bool> UserExist(string email)
         {
             return await _context.Users.AnyAsync(e => e.Email == email);
+        }
+
+        public async Task<bool> UserExistInTeam(string email, Guid teamId)
+        {
+            var result = await _context.UsersTeams.FirstOrDefaultAsync(x => x.UserEmail == email && x.TeamId == teamId);
+            if (result != null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

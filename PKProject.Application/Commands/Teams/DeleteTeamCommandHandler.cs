@@ -11,7 +11,7 @@ namespace PKProject.Application.Commands.Teams
 {
     public class DeleteTeamCommandHandler : IRequestHandler<DeleteTeamCommand, bool>
     {
-        public readonly ITeamRepository _repository;
+        private readonly ITeamRepository _repository;
 
         public DeleteTeamCommandHandler(ITeamRepository repository)
         {

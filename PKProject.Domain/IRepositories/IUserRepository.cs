@@ -12,5 +12,7 @@ namespace PKProject.Domain.IRepositories
         Task<bool> UserExist(string email);
         Task<bool> CreateUser(User user);
         Task<bool> UpdateUser(User user);
+        Task<bool> AddUserToTeam(string email, Guid teamId);
+        Task<bool> UserExistInTeam(string email, Guid teamId);
     }
 }

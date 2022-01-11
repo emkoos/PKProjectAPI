@@ -12,10 +12,10 @@ namespace PKProject.Application.Commands.Boards
 {
     public class UpdateBoardCommandHandler : IRequestHandler<UpdateBoardCommand, bool?>
     {
-        public readonly IMediator _mediator;
-        public readonly ITeamRepository _teamRepository;
-        public readonly IBoardRepository _boardRepository;
-        public readonly IBoardTypeRepository _boardTypeRepository;
+        private readonly IMediator _mediator;
+        private readonly ITeamRepository _teamRepository;
+        private readonly IBoardRepository _boardRepository;
+        private readonly IBoardTypeRepository _boardTypeRepository;
 
         public UpdateBoardCommandHandler(IMediator mediator, ITeamRepository teamRepository, IBoardRepository boardRepository, IBoardTypeRepository boardTypeRepository)
         {

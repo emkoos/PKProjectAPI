@@ -11,7 +11,7 @@ namespace PKProject.Application.Commands.Boards
 {
     public class DeleteBoardCommandHandler : IRequestHandler<DeleteBoardCommand, bool>
     {
-        public readonly IBoardRepository _repository;
+        private readonly IBoardRepository _repository;
 
         public DeleteBoardCommandHandler(IBoardRepository repository)
         {

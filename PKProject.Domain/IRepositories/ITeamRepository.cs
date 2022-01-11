@@ -10,6 +10,7 @@ namespace PKProject.Domain.IRepositories
     public interface ITeamRepository
     {
         Task<bool> TeamExist(Guid id);
+        Task<Team> GetTeamById(Guid teamId);
         Task<IEnumerable<Team>> GetLoggedInUserTeams(string email);
         Task<IEnumerable<User>> GetUsersByTeamId(Guid teamId);
         Task<bool> CreateTeam(Team model);

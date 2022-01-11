@@ -11,7 +11,7 @@ namespace PKProject.Application.Commands.Columns
 {
     public class DeleteColumnCommandHandler : IRequestHandler<DeleteColumnCommand, bool>
     {
-        public readonly IColumnRepository _repository;
+        private readonly IColumnRepository _repository;
 
         public DeleteColumnCommandHandler(IColumnRepository repository)
         {

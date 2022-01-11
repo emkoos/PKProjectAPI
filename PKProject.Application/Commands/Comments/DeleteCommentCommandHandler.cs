@@ -11,7 +11,7 @@ namespace PKProject.Application.Commands.Comments
 {
     public class DeleteCommentCommandHandler : IRequestHandler<DeleteCommentCommand, bool>
     {
-        public readonly ICommentRepository _repository;
+        private readonly ICommentRepository _repository;
 
         public DeleteCommentCommandHandler(ICommentRepository repository)
         {

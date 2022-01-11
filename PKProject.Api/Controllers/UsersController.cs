@@ -34,6 +34,13 @@ namespace PKProject.Api.Controllers
             _mediator = mediator;
         }
 
+        [HttpPost("user/add-to-team")]
+        public async Task<IActionResult> AddUserToTeam([FromBody] AddUserToTeamCommand model)
+        {
+            await _mediator.Send(model);
+            return Ok();
+        }
+
         [HttpPut("edit-profile")]
         public async Task<IActionResult> EditProfile([FromBody] UpdateUserCommand user)
         {

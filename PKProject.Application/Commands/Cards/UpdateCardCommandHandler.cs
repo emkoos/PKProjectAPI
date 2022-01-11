@@ -12,10 +12,10 @@ namespace PKProject.Application.Commands.Cards
 {
     public class UpdateCardCommandHandler : IRequestHandler<UpdateCardCommand, bool?>
     {
-        public readonly IMediator _mediator;
-        public readonly ICardRepository _cardRepository;
-        public readonly IUserRepository _userRepository;
-        public readonly IBoardRepository _boardRepository;
+        private readonly IMediator _mediator;
+        private readonly ICardRepository _cardRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IBoardRepository _boardRepository;
 
         public UpdateCardCommandHandler(IMediator mediator, ICardRepository cardRepository, IUserRepository userRepository, IBoardRepository boardRepository)
         {

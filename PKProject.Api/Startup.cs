@@ -23,6 +23,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using PKProject.Api.Configuration;
 using Microsoft.AspNetCore.Identity;
+using PKProject.Infrastructure.Services;
+using PKProject.Domain.IServices;
 
 namespace PKProject.Api
 {
@@ -119,6 +121,7 @@ namespace PKProject.Api
             services.AddScoped<IColumnRepository, ColumnRepository>();
             services.AddScoped<IBoardRepository, BoardRepository>();
             services.AddScoped<ITeamRepository, TeamRepository>();
+            services.AddScoped<IEmailSender, EmailSender>();
 
             services.AddCors(c => c.AddPolicy("PKProjectApiPolicy", builder =>
             {

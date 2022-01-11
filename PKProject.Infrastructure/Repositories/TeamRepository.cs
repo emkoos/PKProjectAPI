@@ -50,6 +50,11 @@ namespace PKProject.Infrastructure.Repositories
             return teams;
         }
 
+        public async Task<Team> GetTeamById(Guid teamId)
+        {
+            return await _context.Teams.FirstOrDefaultAsync(x => x.Id == teamId);
+        }
+
         public async Task<IEnumerable<User>> GetUsersByTeamId(Guid teamId)
         {
             var userTeams = await _context.UsersTeams.Where(x => x.TeamId == teamId).ToListAsync();

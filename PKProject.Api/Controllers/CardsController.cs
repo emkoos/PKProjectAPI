@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PKProject.Api.DTO;
 using PKProject.Application.Commands.Cards;
+using PKProject.Application.Commands.Users;
 using PKProject.Application.Queries.Cards;
 using System;
 using System.Collections.Generic;
@@ -112,6 +113,13 @@ namespace PKProject.Api.Controllers
                 Id = id
             };
 
+            await _mediator.Send(model);
+            return Ok();
+        }
+
+        [HttpPut("edit-user")]
+        public async Task<IActionResult> EditCardUser([FromBody] UpdateCardUserCommand model)
+        {
             await _mediator.Send(model);
             return Ok();
         }

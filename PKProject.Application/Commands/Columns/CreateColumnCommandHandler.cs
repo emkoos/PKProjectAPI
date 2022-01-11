@@ -12,9 +12,9 @@ namespace PKProject.Application.Commands.Columns
 {
     public class CreateColumnCommandHandler : IRequestHandler<CreateColumnCommand, bool>
     {
-        public readonly IMediator _mediator;
-        public readonly IColumnRepository _columnRepository;
-        public readonly IBoardRepository _boardRepository;
+        private readonly IMediator _mediator;
+        private readonly IColumnRepository _columnRepository;
+        private readonly IBoardRepository _boardRepository;
 
         public CreateColumnCommandHandler(IMediator mediator, IColumnRepository columnRepository, IBoardRepository boardRepository)
         {

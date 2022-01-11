@@ -11,7 +11,7 @@ namespace PKProject.Application.Commands.Cards
 {
     public class DeleteCardCommandHandler : IRequestHandler<DeleteCardCommand, bool>
     {
-        public readonly ICardRepository _repository;
+        private readonly ICardRepository _repository;
 
         public DeleteCardCommandHandler(ICardRepository repository)
         {
