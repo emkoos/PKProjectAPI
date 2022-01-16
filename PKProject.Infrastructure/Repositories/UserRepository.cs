@@ -43,6 +43,11 @@ namespace PKProject.Infrastructure.Repositories
             return await _context.SaveChangesAsync() > 0;
         }
 
+        public async Task<User> GetLoggedInUser(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+        }
+
         public async Task<bool> UpdateUser(User user)
         {
             var editUser = await _context.Users.FirstOrDefaultAsync(x => x.Email == user.Email);

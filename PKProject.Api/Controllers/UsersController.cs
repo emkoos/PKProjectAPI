@@ -16,11 +16,16 @@ using Microsoft.AspNetCore.Identity;
 using PKProject.Api.Configuration;
 using PKProject.Api.DTO.Users;
 using PKProject.Application.Commands.Users;
+using PKProject.Application.Queries.Users;
+using System.Net;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PKProject.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UsersController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager; 
@@ -35,13 +40,34 @@ namespace PKProject.Api.Controllers
         }
 
         [HttpPost("user/add-to-team")]
+        [AllowAnonymous]
         public async Task<IActionResult> AddUserToTeam([FromBody] AddUserToTeamCommand model)
         {
             await _mediator.Send(model);
             return Ok();
         }
 
+        [HttpGet("user/logged-in-user")]
+        public async Task<IActionResult> GetLoggedInUser()
+        {
+            var loggedInUser = User.FindFirstValue(ClaimTypes.Email);
+
+            if (loggedInUser is null)
+            {
+                return Unauthorized();
+            }
+
+            var model = new GetLoggedInUserQuery
+            {
+                UserEmail = loggedInUser
+            };
+
+            var output = await _mediator.Send(model);
+            return Ok(output);
+        }
+
         [HttpPut("edit-profile")]
+        [AllowAnonymous]
         public async Task<IActionResult> EditProfile([FromBody] UpdateUserCommand user)
         {
             var editUser = await _userManager.FindByEmailAsync(user.Email);
@@ -60,6 +86,7 @@ namespace PKProject.Api.Controllers
         }
 
         [HttpPost("register")]
+        [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] UserRegistrationDto user)
         {
             if (ModelState.IsValid)
@@ -125,6 +152,7 @@ namespace PKProject.Api.Controllers
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] UserLoginRequest user)
         {
             if (ModelState.IsValid)
