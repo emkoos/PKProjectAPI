@@ -70,8 +70,8 @@ namespace PKProject.Api.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateBoard([FromBody] CreateBoardCommand model)
         {
-            await _mediator.Send(model);
-            return Created($"/boards/board", null);
+            var result = await _mediator.Send(model);
+            return Created($"/boards/board", result);
         }
 
         [HttpPut("edit")]
