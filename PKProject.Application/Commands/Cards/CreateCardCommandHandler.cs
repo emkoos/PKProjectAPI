@@ -45,6 +45,8 @@ namespace PKProject.Application.Commands.Cards
                 UserEmail = request.UserEmail,
                 ColumnId = request.ColumnId,
                 StatusId = request.StatusId,
+                CreatedDate = DateTime.Now,
+                UpdatedStatusDoneDate = DateTime.MinValue,
                 DeadlineDate = request.DeadlineDate,
                 Priority = request.Priority,
                 Estimate = request.Estimate,

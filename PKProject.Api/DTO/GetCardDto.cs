@@ -13,6 +13,8 @@ namespace PKProject.Api.DTO
         public string UserEmail { get; set; }
         public Guid ColumnId { get; set; }
         public Guid StatusId { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime UpdatedStatusDoneDate { get; set; }
         public DateTime DeadlineDate { get; set; }
         public int Priority { get; set; }
         public int Estimate { get; set; }

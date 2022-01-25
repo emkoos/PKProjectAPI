@@ -16,13 +16,15 @@ namespace PKProject.Application.Commands.Cards
         private readonly ICardRepository _cardRepository;
         private readonly IUserRepository _userRepository;
         private readonly IBoardRepository _boardRepository;
+        private readonly IStatusRepository _statusRepository;
 
-        public UpdateCardCommandHandler(IMediator mediator, ICardRepository cardRepository, IUserRepository userRepository, IBoardRepository boardRepository)
+        public UpdateCardCommandHandler(IMediator mediator, ICardRepository cardRepository, IUserRepository userRepository, IBoardRepository boardRepository, IStatusRepository statusRepository)
         {
             _mediator = mediator;
             _cardRepository = cardRepository;
             _userRepository = userRepository;
             _boardRepository = boardRepository;
+            _statusRepository = statusRepository;
         }
 
         public async Task<bool?> Handle(UpdateCardCommand request, CancellationToken cancellationToken)
@@ -42,6 +44,17 @@ namespace PKProject.Application.Commands.Cards
                 request.Description = "";
             }
 
+            var UpdateDate = request.UpdatedStatusDoneDate;
+
+            var editingCard = await _cardRepository.GetCardById(request.Id);
+
+            var statusBefore = await _statusRepository.GetStatusById(editingCard.StatusId);
+            var statusNew = await _statusRepository.GetStatusById(request.StatusId);
+            if (statusNew.Name == "Done" && statusBefore.Name != "Done")
+            {
+                UpdateDate = DateTime.Now;
+            }
+
             var model = new Card
             {
                 Id = request.Id,
@@ -50,6 +63,8 @@ namespace PKProject.Application.Commands.Cards
                 UserEmail = request.UserEmail,
                 ColumnId = request.ColumnId,
                 StatusId = request.StatusId,
+                CreatedDate = request.CreatedDate,
+                UpdatedStatusDoneDate = UpdateDate,
                 DeadlineDate = request.DeadlineDate,
                 Priority = request.Priority,
                 Estimate = request.Estimate,

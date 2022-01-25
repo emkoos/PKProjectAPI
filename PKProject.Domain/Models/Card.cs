@@ -22,6 +22,8 @@ namespace PKProject.Domain.Models
 
         public Guid StatusId { get; set; }
         public Status Status { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime UpdatedStatusDoneDate { get; set; }
         public DateTime DeadlineDate { get; set; }
         public int Priority { get; set; }
         public int Estimate { get; set; }

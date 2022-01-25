@@ -15,5 +15,6 @@ namespace PKProject.Domain.IRepositories
         Task<bool> CreateBoard(Board model);
         Task<bool?> UpdateBoard(Board model);
         Task<bool> DeleteBoard(Guid id);
+        Task<IEnumerable<Board>> GetUserAllBoards(string email);
     }
 }

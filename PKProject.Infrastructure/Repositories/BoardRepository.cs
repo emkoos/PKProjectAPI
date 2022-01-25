@@ -60,5 +60,23 @@ namespace PKProject.Infrastructure.Repositories
 
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<IEnumerable<Board>> GetUserAllBoards(string email)
+        {
+            var userTeams = await _context.UsersTeams.Where(x => x.UserEmail == email).ToListAsync();
+
+            var boards = new List<Board>();
+
+            foreach (var team in userTeams)
+            {
+                var teamBoards = await _context.Boards.Where(x => x.TeamId == team.TeamId).ToListAsync();
+                foreach (var board in teamBoards)
+                {
+                    boards.Add(board);
+                }
+            }
+
+            return boards;
+        }
     }
 }

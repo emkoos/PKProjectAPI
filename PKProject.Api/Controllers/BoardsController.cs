@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PKProject.Api.DTO;
 using PKProject.Application.Commands.Boards;
@@ -7,12 +9,15 @@ using PKProject.Application.Queries.Boards;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace PKProject.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class BoardsController : Controller
     {
         private readonly IMediator _mediator;
@@ -53,6 +58,26 @@ namespace PKProject.Api.Controllers
             };
 
             var boards = await _mediator.Send(request);
+
+            if (!boards.Any())
+            {
+                return NoContent();
+            }
+
+            var output = new GetBoardsDto()
+            {
+                Boards = _mapper.Map<List<GetBoardDto>>(boards)
+            };
+
+            return Ok(output);
+        }
+
+        [HttpGet("Teams/my")]
+        public async Task<ActionResult<GetBoardsDto>> GetMyAllTeamsBoards()
+        {
+            var loggedInUser = User.FindFirstValue(ClaimTypes.Email);
+
+            var boards = await _mediator.Send(new GetMyAllBoardsQuery { Email = loggedInUser });
 
             if (!boards.Any())
             {
