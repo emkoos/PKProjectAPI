@@ -55,6 +55,11 @@ namespace PKProject.Application.Commands.Cards
                 UpdateDate = DateTime.Now;
             }
 
+            if (statusBefore.Name == "Done" && statusNew.Name != "Done")
+            {
+                UpdateDate = DateTime.MinValue;
+            }
+
             var model = new Card
             {
                 Id = request.Id,
