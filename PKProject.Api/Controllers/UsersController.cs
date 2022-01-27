@@ -66,7 +66,6 @@ namespace PKProject.Api.Controllers
         }
 
         [HttpPut("edit-profile")]
-        [AllowAnonymous]
         public async Task<IActionResult> EditProfile([FromBody] UpdateUserCommand user)
         {
             var editUser = await _userManager.FindByEmailAsync(user.Email);
