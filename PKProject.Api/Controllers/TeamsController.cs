@@ -56,6 +56,26 @@ namespace PKProject.Api.Controllers
             return Ok(output);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<GetTeamDto>> GetTeam(Guid id)
+        {
+            var request = new GetTeamQuery
+            {
+                Id = id
+            };
+
+            var team = await _mediator.Send(request);
+
+            if (team is null)
+            {
+                return NoContent();
+            }
+
+            var output = _mapper.Map<GetTeamDto>(team);
+
+            return Ok(output);
+        }
+
         [HttpGet("teams/users/{teamId}")]
         public async Task<ActionResult<GetUsersDto>> GetUsersByTeamId(Guid teamId)
         {
