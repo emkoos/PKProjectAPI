@@ -21,9 +21,17 @@ namespace PKProject.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<bool> CreateTeam(Team model)
+        public async Task<bool> CreateTeam(Team model, string email)
         {
             await _context.Teams.AddAsync(model);
+
+            var userTeams = new UsersTeam
+            {
+                UserEmail = email,
+                TeamId = model.Id
+            };
+
+            await _context.UsersTeams.AddAsync(userTeams);
             return await _context.SaveChangesAsync() > 0;
         }
 

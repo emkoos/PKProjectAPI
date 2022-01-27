@@ -28,13 +28,18 @@ namespace PKProject.Application.Commands.Teams
                 request.Name = "Bez nazwy";
             }
 
+            if (request.UserEmail is null)
+            {
+                throw new Exception("Something wrong with creating User");
+            }
+
             var model = new Team
             {
                 Id = Guid.NewGuid(),
                 Name = request.Name
             };
 
-            var result = await _teamRepository.CreateTeam(model);
+            var result = await _teamRepository.CreateTeam(model, request.UserEmail);
 
             return result;
         }

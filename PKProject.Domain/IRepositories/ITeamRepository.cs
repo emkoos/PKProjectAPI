@@ -13,7 +13,7 @@ namespace PKProject.Domain.IRepositories
         Task<Team> GetTeamById(Guid teamId);
         Task<IEnumerable<Team>> GetLoggedInUserTeams(string email);
         Task<IEnumerable<User>> GetUsersByTeamId(Guid teamId);
-        Task<bool> CreateTeam(Team model);
+        Task<bool> CreateTeam(Team model, string email);
         Task<bool> DeleteTeam(Guid teamId);
     }
 }

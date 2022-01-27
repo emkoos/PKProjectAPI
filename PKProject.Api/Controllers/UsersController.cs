@@ -40,7 +40,6 @@ namespace PKProject.Api.Controllers
         }
 
         [HttpPost("user/add-to-team")]
-        [AllowAnonymous]
         public async Task<IActionResult> AddUserToTeam([FromBody] AddUserToTeamCommand model)
         {
             await _mediator.Send(model);

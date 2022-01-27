@@ -77,7 +77,9 @@ namespace PKProject.Api.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateTeam([FromBody] CreateTeamCommand model)
         {
-            await _mediator.Send(model);
+            var loggedInUser = User.FindFirstValue(ClaimTypes.Email);
+
+            await _mediator.Send(new CreateTeamCommand { Name = model.Name, UserEmail = loggedInUser});
             return Created($"/teams/team", null);
         }
 
