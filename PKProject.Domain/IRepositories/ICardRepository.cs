@@ -13,6 +13,7 @@ namespace PKProject.Domain.IRepositories
         Task<Card> GetCardById(Guid id);
         Task<IEnumerable<Card>> GetCardsByColumnId(Guid id);
         Task<IEnumerable<Card>> GetCardsByUserEmail(string email);
+        Task<IEnumerable<Card>> GetCardsByDeadlineDateIn24H(DateTime date);
         Task<bool> CreateCard(Card model);
         Task<bool?> UpdateCard(Card model);
         Task<bool> DeleteCard(Guid id);

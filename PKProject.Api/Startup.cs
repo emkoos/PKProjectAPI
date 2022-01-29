@@ -25,6 +25,9 @@ using PKProject.Api.Configuration;
 using Microsoft.AspNetCore.Identity;
 using PKProject.Infrastructure.Services;
 using PKProject.Domain.IServices;
+using Hangfire;
+using Hangfire.MemoryStorage;
+using PKProject.Api.Jobs;
 
 namespace PKProject.Api
 {
@@ -127,6 +130,14 @@ namespace PKProject.Api
             {
                 builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
             }));
+
+            services.AddHangfire(config =>
+                config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseDefaultTypeSerializer()
+                .UseMemoryStorage());
+
+            services.AddHangfireServer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -152,6 +163,10 @@ namespace PKProject.Api
             {
                 endpoints.MapControllers();
             });
+
+            app.UseHangfireDashboard();
+
+            RecurringJob.AddOrUpdate<ReminderJob>(x => x.PrepareRemind(), Cron.Minutely, TimeZoneInfo.Local);
         }
     }
 }

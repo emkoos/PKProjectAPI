@@ -40,6 +40,12 @@ namespace PKProject.Infrastructure.Repositories
             return await _context.Cards.Where(x => x.UserEmail == email).ToListAsync();
         }
 
+        public async Task<IEnumerable<Card>> GetCardsByDeadlineDateIn24H(DateTime date)
+        {
+            return await _context.Cards.Where(x => x.DeadlineDate.Date == date.Date && x.DeadlineDate.Hour == date.Hour && x.DeadlineDate.Minute == date.Minute).ToListAsync();
+            //return await _context.Cards.Where(x => x.DeadlineDate == date).ToListAsync();
+        }
+
         public async Task<bool> CreateCard(Card model)
         {
             await _context.Cards.AddAsync(model);
