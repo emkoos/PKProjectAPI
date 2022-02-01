@@ -20,6 +20,10 @@ using PKProject.Application.Queries.Users;
 using System.Net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 
 namespace PKProject.Api.Controllers
 {
@@ -31,12 +35,14 @@ namespace PKProject.Api.Controllers
         private readonly UserManager<IdentityUser> _userManager; 
         private readonly JwtConfig _jwtConfig;
         private readonly IMediator _mediator;
+        private readonly AppDbContext _context;
 
-        public UsersController(UserManager<IdentityUser> userManager, IOptions<JwtConfig> options, IMediator mediator)
+        public UsersController(UserManager<IdentityUser> userManager, IOptions<JwtConfig> options, IMediator mediator,  AppDbContext context)
         {
             _userManager = userManager;
             _jwtConfig = options.Value;
             _mediator = mediator;
+            _context = context;
         }
 
         [HttpPost("user/add-to-team")]
@@ -61,8 +67,24 @@ namespace PKProject.Api.Controllers
                 UserEmail = loggedInUser
             };
 
-            var output = await _mediator.Send(model);
-            return Ok(output);
+            var result = await _mediator.Send(model);
+
+            string base64Photo = "";
+
+            if (result.Photo != null)
+            {
+                base64Photo = Convert.ToBase64String(result.Photo);
+            }
+
+            var returnUser = new GetUserInfoDto
+            {
+                Email = result.Email,
+                Firstname = result.Firstname,
+                Lastname = result.Lastname,
+                Photo = base64Photo
+            };
+
+            return Ok(returnUser);
         }
 
         [HttpPut("edit-profile")]
@@ -82,6 +104,41 @@ namespace PKProject.Api.Controllers
             await _mediator.Send(user);
             return Ok();
         }
+
+        [HttpPost("upload-photo")]
+        public async Task<IActionResult> UploadPhoto([FromForm] IFormFile file)
+        {
+            var loggedInUser = User.FindFirstValue(ClaimTypes.Email);
+            if (file.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    file.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    string s = Convert.ToBase64String(fileBytes);
+                    var user = await _context.Users.Where(x => x.Email == loggedInUser).FirstOrDefaultAsync();
+                    user.Photo = fileBytes;
+                    _context.Entry(user).CurrentValues.SetValues(user);
+
+                    await _context.SaveChangesAsync();
+                }
+            }
+            return Ok();
+        }
+
+        //[HttpPost("download-file/{email}")]
+        //public async Task<IActionResult> DownloadPhoto(string email)
+        //{
+        //    var user = await _context.Users.Where(x => x.Email == email).FirstOrDefaultAsync();
+
+        //    string base64Photo = Convert.ToBase64String(user.Photo);
+        //    var returnPhoto = new GetUserPhotoDto
+        //    {
+        //        Photo = base64Photo
+        //    };
+
+        //    return Ok(returnPhoto);
+        //}
 
         [HttpPost("register")]
         [AllowAnonymous]

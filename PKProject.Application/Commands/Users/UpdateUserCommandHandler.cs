@@ -23,6 +23,8 @@ namespace PKProject.Application.Commands.Users
 
         public async Task<bool?> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
+            var user = await _userRepository.GetLoggedInUser(request.Email);
+
             if (!await _userRepository.UserExist(request.Email))
             {
                 throw new Exception("Not Found User");
@@ -34,7 +36,7 @@ namespace PKProject.Application.Commands.Users
                 Username = request.Username,
                 Firstname = request.Firstname,
                 Lastname = request.Lastname,
-                Photo = request.Photo
+                Photo = user.Photo
             };
 
             var result = await _userRepository.UpdateUser(model);
