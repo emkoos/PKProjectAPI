@@ -15,7 +15,7 @@ namespace PKProject.Api.DTO
         public Guid StatusId { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedStatusDoneDate { get; set; }
-        public DateTime DeadlineDate { get; set; }
+        public string DeadlineDate { get; set; }
         public int Priority { get; set; }
         public int Estimate { get; set; }
         public byte[] Attachement { get; set; }

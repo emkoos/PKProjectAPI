@@ -70,7 +70,7 @@ namespace PKProject.Application.Commands.Cards
                 StatusId = request.StatusId,
                 CreatedDate = request.CreatedDate,
                 UpdatedStatusDoneDate = UpdateDate,
-                DeadlineDate = request.DeadlineDate,
+                DeadlineDate = request.DeadlineDate.AddHours(1),
                 Priority = request.Priority,
                 Estimate = request.Estimate,
                 Attachement = request.Attachement

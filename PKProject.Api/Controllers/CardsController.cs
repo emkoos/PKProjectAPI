@@ -40,7 +40,21 @@ namespace PKProject.Api.Controllers
                 return NoContent();
             }
 
-            var output = _mapper.Map<GetCardDto>(card);
+            var output = new GetCardDto
+            {
+                Id = card.Id,
+                Title = card.Title,
+                Description = card.Description,
+                UserEmail = card.UserEmail,
+                ColumnId = card.ColumnId,
+                StatusId = card.StatusId,
+                CreatedDate = card.CreatedDate,
+                UpdatedStatusDoneDate = card.UpdatedStatusDoneDate,
+                DeadlineDate = card.DeadlineDate.ToString(),
+                Priority = card.Priority,
+                Estimate = card.Estimate,
+                Attachement = card.Attachement
+            };
 
             return Ok(output);
         }
@@ -83,9 +97,30 @@ namespace PKProject.Api.Controllers
                 return NoContent();
             }
 
+            var cardDto = new List<GetCardDto>();
+
+            foreach (var card in cards)
+            {
+                cardDto.Add(new GetCardDto
+                {
+                    Id = card.Id,
+                    Title = card.Title,
+                    Description = card.Description,
+                    UserEmail = card.UserEmail,
+                    ColumnId = card.ColumnId,
+                    StatusId = card.StatusId,
+                    CreatedDate = card.CreatedDate,
+                    UpdatedStatusDoneDate = card.UpdatedStatusDoneDate,
+                    DeadlineDate = card.DeadlineDate.ToString(),
+                    Priority = card.Priority,
+                    Estimate = card.Estimate,
+                    Attachement = card.Attachement
+                });
+            }
+
             var output = new GetCardsDto()
             {
-                Cards = _mapper.Map<List<GetCardDto>>(cards)
+                Cards = cardDto
             };
 
             return Ok(output);

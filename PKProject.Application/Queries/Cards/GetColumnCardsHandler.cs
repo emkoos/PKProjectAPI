@@ -24,7 +24,7 @@ namespace PKProject.Application.Queries.Cards
             var cards = await _repository.GetCardsByColumnId(request.ColumnId);
             foreach (var card in cards)
             {
-                card.DeadlineDate = card.DeadlineDate.Date;
+                card.DeadlineDate = card.DeadlineDate;
             }
 
             return cards;
