@@ -11,6 +11,6 @@ namespace PKProject.Api.DTO
         public string UserEmail { get; set; }
         public Guid CardId { get; set; }
         public string Content { get; set; }
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
     }
 }

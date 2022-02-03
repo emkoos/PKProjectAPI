@@ -40,23 +40,8 @@ namespace PKProject.Api.Controllers
                 return NoContent();
             }
 
-            var output = new GetCardDto
-            {
-                Id = card.Id,
-                Title = card.Title,
-                Description = card.Description,
-                UserEmail = card.UserEmail,
-                ColumnId = card.ColumnId,
-                StatusId = card.StatusId,
-                CreatedDate = card.CreatedDate,
-                UpdatedStatusDoneDate = card.UpdatedStatusDoneDate,
-                DeadlineDate = card.DeadlineDate.ToString(),
-                Priority = card.Priority,
-                Estimate = card.Estimate,
-                Attachement = card.Attachement
-            };
-
-            return Ok(output);
+            
+            return Ok(card);
         }
 
         [HttpGet("User/{email}")]
