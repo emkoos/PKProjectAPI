@@ -45,15 +45,8 @@ namespace PKProject.Api.Controllers
                 return NoContent();
             }
 
-            var output = new GetCommentDto
-            {
-                Id = comment.Id,
-                UserEmail = comment.UserEmail,
-                CardId = comment.CardId,
-                Content = comment.Content,
-                Date = comment.Date.ToString()
-            };
-
+            var output = _mapper.Map<GetCommentDto>(comment);
+                
             return Ok(output);
         }
 
@@ -72,23 +65,9 @@ namespace PKProject.Api.Controllers
                 return NoContent();
             }
 
-            var commentDto = new List<GetCommentDto>();
-
-            foreach (var comment in comments)
-            {
-                commentDto.Add(new GetCommentDto
-                {
-                    Id = comment.Id,
-                    UserEmail = comment.UserEmail,
-                    CardId = comment.CardId,
-                    Content = comment.Content,
-                    Date = comment.Date.ToString()
-                });
-            }
-
             var output = new GetCommentsDto()
             {
-                Comments = commentDto
+                Comments = _mapper.Map<List<GetCommentDto>>(comments)
             };
 
             return Ok(output);
