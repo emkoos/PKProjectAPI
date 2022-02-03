@@ -2,9 +2,6 @@
 using PKProject.Domain.IRepositories;
 using PKProject.Domain.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,14 +9,12 @@ namespace PKProject.Application.Commands.Boards
 {
     public class CreateBoardCommandHandler : IRequestHandler<CreateBoardCommand, Guid>
     {
-        private readonly IMediator _mediator;
         private readonly ITeamRepository _teamRepository;
         private readonly IBoardRepository _boardRepository;
         private readonly IBoardTypeRepository _boardTypeRepository;
 
-        public CreateBoardCommandHandler(IMediator mediator, ITeamRepository teamRepository, IBoardRepository boardRepository, IBoardTypeRepository boardTypeRepository)
+        public CreateBoardCommandHandler(ITeamRepository teamRepository, IBoardRepository boardRepository, IBoardTypeRepository boardTypeRepository)
         {
-            _mediator = mediator;
             _teamRepository = teamRepository;
             _boardRepository = boardRepository;
             _boardTypeRepository = boardTypeRepository;

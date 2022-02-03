@@ -2,9 +2,6 @@
 using PKProject.Domain.IRepositories;
 using PKProject.Domain.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,18 +9,14 @@ namespace PKProject.Application.Commands.Cards
 {
     public class UpdateCardCommandHandler : IRequestHandler<UpdateCardCommand, bool?>
     {
-        private readonly IMediator _mediator;
         private readonly ICardRepository _cardRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IBoardRepository _boardRepository;
         private readonly IStatusRepository _statusRepository;
 
-        public UpdateCardCommandHandler(IMediator mediator, ICardRepository cardRepository, IUserRepository userRepository, IBoardRepository boardRepository, IStatusRepository statusRepository)
+        public UpdateCardCommandHandler(ICardRepository cardRepository, IUserRepository userRepository, IStatusRepository statusRepository)
         {
-            _mediator = mediator;
             _cardRepository = cardRepository;
             _userRepository = userRepository;
-            _boardRepository = boardRepository;
             _statusRepository = statusRepository;
         }
 

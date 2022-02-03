@@ -2,9 +2,6 @@
 using PKProject.Domain.IRepositories;
 using PKProject.Domain.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,17 +9,13 @@ namespace PKProject.Application.Commands.Cards
 {
     public class CreateCardCommandHandler : IRequestHandler<CreateCardCommand, bool>
     {
-        private readonly IMediator _mediator;
         private readonly ICardRepository _cardRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IBoardRepository _boardRepository;
 
-        public CreateCardCommandHandler(IMediator mediator, ICardRepository cardRepository, IUserRepository userRepository, IBoardRepository boardRepository)
+        public CreateCardCommandHandler(ICardRepository cardRepository, IUserRepository userRepository)
         {
-            _mediator = mediator;
             _cardRepository = cardRepository;
             _userRepository = userRepository;
-            _boardRepository = boardRepository;
         }
 
         public async Task<bool> Handle(CreateCardCommand request, CancellationToken cancellationToken)
