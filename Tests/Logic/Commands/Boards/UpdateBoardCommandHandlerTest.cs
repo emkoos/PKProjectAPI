@@ -95,7 +95,7 @@ namespace Tests.Logic.Commands.Boards
         }
 
         [Fact]
-        public async Task Handler_RequestObjectWithNotExistingBoardInRepo_ReturnsNull()
+        public async Task Handler_RequestObjectWithCorrectData_ReturnsTrue()
         {
             // Arrange
             var testRequest = new UpdateBoardCommand
@@ -118,13 +118,13 @@ namespace Tests.Logic.Commands.Boards
             mockTeamRepository.Setup(x => x.TeamExist(testRequest.TeamId)).ReturnsAsync(true);
             mockBoardTypeRepository.Setup(x => x.BoardTypeExist(testRequest.BoardTypeId)).ReturnsAsync(true);
 
-            mockBoardRepository.Setup(x => x.UpdateBoard(testRequestModel)).ReturnsAsync(true);
+            mockBoardRepository.Setup(x => x.UpdateBoard(It.IsAny<Board>())).ReturnsAsync(true);
 
             // Act
             var result = await sut.Handle(testRequest, It.IsAny<CancellationToken>());
 
             // Assert
-            result.Should().BeNull();
+            result.Should().BeTrue();
         }
     }
 }

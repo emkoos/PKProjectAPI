@@ -13,14 +13,12 @@ namespace PKProject.Application.Commands.Users
 {
     public class UpdateCardUserCommandHandler : IRequestHandler<UpdateCardUserCommand, bool?>
     {
-        private readonly IMediator _mediator;
         private readonly IUserRepository _userRepository;
         private readonly ICardRepository _cardRepository;
         private readonly IEmailSender _emailSender;
 
-        public UpdateCardUserCommandHandler(IMediator mediator, IUserRepository userRepository, ICardRepository cardRepository, IEmailSender emailSender)
+        public UpdateCardUserCommandHandler(IUserRepository userRepository, ICardRepository cardRepository, IEmailSender emailSender)
         {
-            _mediator = mediator;
             _userRepository = userRepository;
             _cardRepository = cardRepository;
             _emailSender = emailSender;

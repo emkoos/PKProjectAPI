@@ -12,12 +12,10 @@ namespace PKProject.Application.Commands.Teams
 {
     public class CreateTeamCommandHandler : IRequestHandler<CreateTeamCommand, bool>
     {
-        private readonly IMediator _mediator;
         private readonly ITeamRepository _teamRepository;
 
-        public CreateTeamCommandHandler(IMediator mediator, ITeamRepository teamRepository)
+        public CreateTeamCommandHandler(ITeamRepository teamRepository)
         {
-            _mediator = mediator;
             _teamRepository = teamRepository;
         }
 

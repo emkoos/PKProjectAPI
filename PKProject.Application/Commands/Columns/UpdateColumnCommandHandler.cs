@@ -12,13 +12,11 @@ namespace PKProject.Application.Commands.Columns
 {
     public class UpdateColumnCommandHandler : IRequestHandler<UpdateColumnCommand, bool?>
     {
-        private readonly IMediator _mediator;
         private readonly IColumnRepository _columnRepository;
         private readonly IBoardRepository _boardRepository;
 
-        public UpdateColumnCommandHandler(IMediator mediator, IColumnRepository columnRepository, IBoardRepository boardRepository)
+        public UpdateColumnCommandHandler(IColumnRepository columnRepository, IBoardRepository boardRepository)
         {
-            _mediator = mediator;
             _columnRepository = columnRepository;
             _boardRepository = boardRepository;
         }

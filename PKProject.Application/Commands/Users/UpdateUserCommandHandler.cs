@@ -12,12 +12,10 @@ namespace PKProject.Application.Commands.Users
 {
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, bool?>
     {
-        private readonly IMediator _mediator;
         private readonly IUserRepository _userRepository;
 
-        public UpdateUserCommandHandler(IMediator mediator, IUserRepository userRepository)
+        public UpdateUserCommandHandler(IUserRepository userRepository)
         {
-            _mediator = mediator;
             _userRepository = userRepository;
         }
 

@@ -12,12 +12,10 @@ namespace PKProject.Application.Commands.Users
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, bool>
     {
-        private readonly IMediator _mediator;
         private readonly IUserRepository _repository;
 
-        public CreateUserCommandHandler(IMediator mediator, IUserRepository repository)
+        public CreateUserCommandHandler(IUserRepository repository)
         {
-            _mediator = mediator;
             _repository = repository;
         }
 

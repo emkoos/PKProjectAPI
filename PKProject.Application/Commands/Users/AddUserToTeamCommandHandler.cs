@@ -12,14 +12,12 @@ namespace PKProject.Application.Commands.Users
 {
     public class AddUserToTeamCommandHandler : IRequestHandler<AddUserToTeamCommand, bool>
     {
-        private readonly IMediator _mediator;
         private readonly IUserRepository _userRepository;
         private readonly ITeamRepository _teamRepository;
         private readonly IEmailSender _emailSender;
 
-        public AddUserToTeamCommandHandler(IMediator mediator, IUserRepository userRepository, ITeamRepository teamRepository, IEmailSender emailSender)
+        public AddUserToTeamCommandHandler(IUserRepository userRepository, ITeamRepository teamRepository, IEmailSender emailSender)
         {
-            _mediator = mediator;
             _userRepository = userRepository;
             _teamRepository = teamRepository;
             _emailSender = emailSender;

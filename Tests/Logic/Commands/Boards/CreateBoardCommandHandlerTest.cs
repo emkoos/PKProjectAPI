@@ -91,7 +91,7 @@ namespace Tests.Logic.Commands.Boards
 
             mockTeamRepository.Setup(x => x.TeamExist(testRequest.TeamId)).ReturnsAsync(true);
             mockBoardTypeRepository.Setup(x => x.BoardTypeExist(testRequest.BoardTypeId)).ReturnsAsync(true);
-            mockBoardRepository.Setup(x => x.CreateBoard(testRequestModel)).ReturnsAsync(true);
+            mockBoardRepository.Setup(x => x.CreateBoard(It.IsAny<Board>())).ReturnsAsync(true);
 
             // Act
             var result = await sut.Handle(testRequest, It.IsAny<CancellationToken>());

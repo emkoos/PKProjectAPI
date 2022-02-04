@@ -66,7 +66,7 @@ namespace Tests.Logic.Commands.Cards
         }
 
         [Fact]
-        public async Task Handler_RequestObjectWithNotExistingCardInRepo_ReturnsNull()
+        public async Task Handler_RequestObjectWithCorrectData_ReturnsTrue()
         {
             // Arrange
             var testRequest = new UpdateCardCommand
@@ -113,13 +113,13 @@ namespace Tests.Logic.Commands.Cards
             mockUserRepository.Setup(x => x.UserExist(testRequest.UserEmail)).ReturnsAsync(true);
             mockCardRepository.Setup(x => x.CreateCard(testRequestModel)).ReturnsAsync(true);
 
-            mockCardRepository.Setup(x => x.UpdateCard(testRequestModel)).ReturnsAsync(false);
+            mockCardRepository.Setup(x => x.UpdateCard(It.IsAny<Card>())).ReturnsAsync(true);
 
             // Act
             var result = await sut.Handle(testRequest, It.IsAny<CancellationToken>());
 
             // Assert
-            result.Should().BeNull();
+            result.Should().BeTrue();
         }
     
     }
