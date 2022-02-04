@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Moq;
 using PKProject.Application.Commands.Columns;
+using PKProject.Domain.Exceptions.AppExceptions;
 using PKProject.Domain.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ namespace Tests.Logic.Commands.Columns
             Func<Task<bool>> act = async () => await sut.Handle(testRequest, It.IsAny<CancellationToken>());
 
             // Assert
-            await act.Should().ThrowAsync<Exception>().Where(e => e.Message == "Not Found Column");
+            await act.Should().ThrowAsync<NotFoundException>().Where(e => e.Message == "Not Found Column");
         }
 
 

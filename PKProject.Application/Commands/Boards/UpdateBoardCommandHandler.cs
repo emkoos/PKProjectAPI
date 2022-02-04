@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PKProject.Domain.Exceptions.AppExceptions;
 using PKProject.Domain.IRepositories;
 using PKProject.Domain.Models;
 using System;
@@ -24,17 +25,17 @@ namespace PKProject.Application.Commands.Boards
         {
             if (!await _boardRepository.BoardExist(request.Id))
             {
-                throw new Exception("Not Found Board");
+                throw new NotFoundException("Not Found Board");
             }
 
             if (!await _teamRepository.TeamExist(request.TeamId))
             {
-                throw new Exception("Not Found Team");
+                throw new NotFoundException("Not Found Team");
             }
 
             if (!await _boardTypeRepository.BoardTypeExist(request.BoardTypeId))
             {
-                throw new Exception("Not Found Board Type");
+                throw new NotFoundException("Not Found Board Type");
             }
 
             var model = new Board

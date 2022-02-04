@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PKProject.Domain.Exceptions.AppExceptions;
 using PKProject.Domain.IRepositories;
 using PKProject.Domain.Models;
 using System;
@@ -27,17 +28,17 @@ namespace PKProject.Application.Commands.Comments
         {
             if (!await _commentRepository.CommentExist(request.Id))
             {
-                throw new Exception("Not Found Comment");
+                throw new NotFoundException("Not Found Comment");
             }
 
             if (!await _userRepository.UserExist(request.UserEmail))
             {
-                throw new Exception("Not Found User");
+                throw new NotFoundException("Not Found User");
             }
 
             if (!await _cardRepository.CardExist(request.CardId))
             {
-                throw new Exception("Not Found Card");
+                throw new NotFoundException("Not Found Card");
             }
 
             if (String.IsNullOrWhiteSpace(request.Content))

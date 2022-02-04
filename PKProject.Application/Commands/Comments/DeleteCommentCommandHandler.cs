@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PKProject.Domain.Exceptions.AppExceptions;
 using PKProject.Domain.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace PKProject.Application.Commands.Comments
         {
             if (!await _repository.CommentExist(request.Id))
             {
-                throw new Exception("Not Found Comment");
+                throw new NotFoundException("Not Found Comment");
             }
 
             var result = await _repository.DeleteComment(request.Id);

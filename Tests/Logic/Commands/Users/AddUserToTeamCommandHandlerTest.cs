@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Moq;
 using PKProject.Application.Commands.Users;
+using PKProject.Domain.Exceptions.AppExceptions;
 using PKProject.Domain.IRepositories;
 using PKProject.Domain.IServices;
 using PKProject.Domain.Models;
@@ -46,7 +47,7 @@ namespace Tests.Logic.Commands.Users
             Func<Task<bool?>> act = async () => await sut.Handle(testRequest, It.IsAny<CancellationToken>());
 
             // Assert
-            await act.Should().ThrowAsync<Exception>().Where(e => e.Message == "User with that email does not exists.");
+            await act.Should().ThrowAsync<NotFoundException>().Where(e => e.Message == "User with that email does not exists.");
         }
 
         [Fact]
@@ -66,7 +67,7 @@ namespace Tests.Logic.Commands.Users
             Func<Task<bool?>> act = async () => await sut.Handle(testRequest, It.IsAny<CancellationToken>());
 
             // Assert
-            await act.Should().ThrowAsync<Exception>().Where(e => e.Message == "Team does not exists.");
+            await act.Should().ThrowAsync<NotFoundException>().Where(e => e.Message == "Team does not exists.");
         }
 
         [Fact]
@@ -87,7 +88,7 @@ namespace Tests.Logic.Commands.Users
             Func<Task<bool?>> act = async () => await sut.Handle(testRequest, It.IsAny<CancellationToken>());
 
             // Assert
-            await act.Should().ThrowAsync<Exception>().Where(e => e.Message == "User with that email exists in that team.");
+            await act.Should().ThrowAsync<NotAvailableException>().Where(e => e.Message == "User with that email exists in that team.");
         }
 
         [Fact]

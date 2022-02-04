@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PKProject.Domain.Exceptions.AppExceptions;
 using PKProject.Domain.IRepositories;
 using PKProject.Domain.Models;
 using System;
@@ -28,7 +29,7 @@ namespace PKProject.Application.Commands.Teams
 
             if (request.UserEmail is null)
             {
-                throw new Exception("Something wrong with creating User");
+                throw new BadRequestException("Something wrong with creating User");
             }
 
             var model = new Team

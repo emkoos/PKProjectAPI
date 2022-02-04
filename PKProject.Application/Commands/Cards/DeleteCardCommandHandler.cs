@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PKProject.Domain.Exceptions.AppExceptions;
 using PKProject.Domain.IRepositories;
 using System;
 using System.Threading;
@@ -19,7 +20,7 @@ namespace PKProject.Application.Commands.Cards
         {
             if (!await _repository.CardExist(request.Id))
             {
-                throw new Exception("Not Found Card");
+                throw new NotFoundException("Not Found Card");
             }
 
             var result = await _repository.DeleteCard(request.Id);

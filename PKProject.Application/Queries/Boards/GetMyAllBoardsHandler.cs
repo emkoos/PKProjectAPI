@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PKProject.Domain.Exceptions.AppExceptions;
 using PKProject.Domain.IRepositories;
 using PKProject.Domain.Models;
 using System;
@@ -29,7 +30,7 @@ namespace PKProject.Application.Queries.Boards
 
             if (boards is null)
             {
-                throw new Exception("No Boards for this user");
+                throw new NotFoundException("No Boards for this user");
             }
 
             return boards;

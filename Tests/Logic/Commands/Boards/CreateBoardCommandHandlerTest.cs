@@ -2,6 +2,7 @@
 using MediatR;
 using Moq;
 using PKProject.Application.Commands.Boards;
+using PKProject.Domain.Exceptions.AppExceptions;
 using PKProject.Domain.IRepositories;
 using PKProject.Domain.Models;
 using System;
@@ -46,7 +47,7 @@ namespace Tests.Logic.Commands.Boards
             Func<Task<Guid>> act = async () => await sut.Handle(testRequest, It.IsAny<CancellationToken>());
 
             // Assert
-            await act.Should().ThrowAsync<Exception>().Where(e => e.Message == "Not Found Team");
+            await act.Should().ThrowAsync<NotFoundException>().Where(e => e.Message == "Not Found Team");
         }
 
         [Fact]
@@ -67,7 +68,7 @@ namespace Tests.Logic.Commands.Boards
             Func<Task<Guid>> act = async () => await sut.Handle(testRequest, It.IsAny<CancellationToken>());
 
             // Assert
-            await act.Should().ThrowAsync<Exception>().Where(e => e.Message == "Not Found Board Type");
+            await act.Should().ThrowAsync<NotFoundException>().Where(e => e.Message == "Not Found Board Type");
         }
 
         [Fact]

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PKProject.Domain.Exceptions.AppExceptions;
 using PKProject.Domain.IRepositories;
 using PKProject.Domain.Models;
 using System;
@@ -24,12 +25,12 @@ namespace PKProject.Application.Commands.Cards
         {
             if (!await _cardRepository.CardExist(request.Id))
             {
-                throw new Exception("Not Found Card");
+                throw new NotFoundException("Not Found Card");
             }
 
             if (!await _userRepository.UserExist(request.UserEmail))
             {
-                throw new Exception("Not Found User");
+                throw new NotFoundException("Not Found User");
             }
 
             if (String.IsNullOrWhiteSpace(request.Description))

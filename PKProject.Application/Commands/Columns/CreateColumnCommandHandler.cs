@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PKProject.Domain.Exceptions.AppExceptions;
 using PKProject.Domain.IRepositories;
 using PKProject.Domain.Models;
 using System;
@@ -26,7 +27,7 @@ namespace PKProject.Application.Commands.Columns
 
             if (!await _boardRepository.BoardExist(request.BoardId))
             {
-                throw new Exception("Not Found Board");
+                throw new NotFoundException("Not Found Board");
             }
 
             if (String.IsNullOrWhiteSpace(request.Title))

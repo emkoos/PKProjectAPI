@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Moq;
 using PKProject.Application.Commands.Teams;
+using PKProject.Domain.Exceptions.AppExceptions;
 using PKProject.Domain.IRepositories;
 using PKProject.Domain.Models;
 using System;
@@ -34,7 +35,7 @@ namespace Tests.Logic.Commands.Teams
             Func<Task<bool>> act = async () => await sut.Handle(testRequest, It.IsAny<CancellationToken>());
 
             // Assert
-            await act.Should().ThrowAsync<Exception>().Where(e => e.Message == "Something wrong with creating User");
+            await act.Should().ThrowAsync<BadRequestException>().Where(e => e.Message == "Something wrong with creating User");
         }
 
         [Fact]

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PKProject.Domain.Exceptions.AppExceptions;
 using PKProject.Domain.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace PKProject.Application.Commands.Teams
         {
             if (!await _repository.TeamExist(request.Id))
             {
-                throw new Exception("Not Found Team");
+                throw new NotFoundException("Not Found Team");
             }
 
             var result = await _repository.DeleteTeam(request.Id);

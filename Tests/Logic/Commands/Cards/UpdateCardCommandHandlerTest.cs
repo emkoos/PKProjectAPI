@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Moq;
 using PKProject.Application.Commands.Cards;
+using PKProject.Domain.Exceptions.AppExceptions;
 using PKProject.Domain.IRepositories;
 using PKProject.Domain.Models;
 using System;
@@ -43,7 +44,7 @@ namespace Tests.Logic.Commands.Cards
             Func<Task<bool?>> act = async () => await sut.Handle(testRequest, It.IsAny<CancellationToken>());
 
             // Assert
-            await act.Should().ThrowAsync<Exception>().Where(e => e.Message == "Not Found Card");
+            await act.Should().ThrowAsync<NotFoundException>().Where(e => e.Message == "Not Found Card");
         }
 
         [Fact]
@@ -62,7 +63,7 @@ namespace Tests.Logic.Commands.Cards
             Func<Task<bool?>> act = async () => await sut.Handle(testRequest, It.IsAny<CancellationToken>());
 
             // Assert
-            await act.Should().ThrowAsync<Exception>().Where(e => e.Message == "Not Found User");
+            await act.Should().ThrowAsync<NotFoundException>().Where(e => e.Message == "Not Found User");
         }
 
         [Fact]

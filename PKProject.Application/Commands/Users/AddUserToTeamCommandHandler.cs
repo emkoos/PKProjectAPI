@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PKProject.Domain.Exceptions.AppExceptions;
 using PKProject.Domain.IRepositories;
 using PKProject.Domain.IServices;
 using System;
@@ -27,15 +28,15 @@ namespace PKProject.Application.Commands.Users
         {
             if (!await _userRepository.UserExist(request.UserEmail))
             {
-                throw new Exception("User with that email does not exists.");
+                throw new NotFoundException("User with that email does not exists.");
             }
             if (!await _teamRepository.TeamExist(request.TeamId))
             {
-                throw new Exception("Team does not exists.");
+                throw new NotFoundException("Team does not exists.");
             }
             if (await _userRepository.UserExistInTeam(request.UserEmail, request.TeamId))
             {
-                throw new Exception("User with that email exists in that team.");
+                throw new NotAvailableException("User with that email exists in that team.");
             }
 
             var result = await _userRepository.AddUserToTeam(request.UserEmail, request.TeamId);

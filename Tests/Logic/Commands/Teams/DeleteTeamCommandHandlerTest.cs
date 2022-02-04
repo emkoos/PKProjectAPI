@@ -4,6 +4,7 @@ using MediatR;
 using Moq;
 using PKProject.Api.Controllers;
 using PKProject.Application.Commands.Teams;
+using PKProject.Domain.Exceptions.AppExceptions;
 using PKProject.Domain.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace Tests.Logic.Commands.Teams
             Func<Task<bool>> act = async () => await sut.Handle(testRequest, It.IsAny<CancellationToken>());
 
             // Assert
-            await act.Should().ThrowAsync<Exception>().Where(e => e.Message == "Not Found Team");
+            await act.Should().ThrowAsync<NotFoundException>().Where(e => e.Message == "Not Found Team");
         }
 
         [Fact]

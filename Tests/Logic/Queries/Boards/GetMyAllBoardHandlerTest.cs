@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Moq;
 using PKProject.Application.Queries.Boards;
+using PKProject.Domain.Exceptions.AppExceptions;
 using PKProject.Domain.IRepositories;
 using PKProject.Domain.Models;
 using System;
@@ -52,7 +53,7 @@ namespace Tests.Logic.Queries.Boards
             Func<Task<IEnumerable<Board>>> act = async () => await sut.Handle(testRequest, It.IsAny<CancellationToken>());
 
             // Assert
-            await act.Should().ThrowAsync<Exception>().Where(e => e.Message == "No Boards for this user");
+            await act.Should().ThrowAsync<NotFoundException>().Where(e => e.Message == "No Boards for this user");
         }
 
         [Fact]

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PKProject.Domain.Exceptions.AppExceptions;
 using PKProject.Domain.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace PKProject.Application.Commands.Columns
         {
             if (!await _repository.ColumnExist(request.Id))
             {
-                throw new Exception("Not Found Column");
+                throw new NotFoundException("Not Found Column");
             }
 
             var result = await _repository.DeleteColumn(request.Id);

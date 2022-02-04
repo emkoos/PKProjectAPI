@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PKProject.Domain.Exceptions.AppExceptions;
 using PKProject.Domain.IRepositories;
 using System;
 using System.Threading;
@@ -19,7 +20,7 @@ namespace PKProject.Application.Commands.Boards
         {
             if (!await _repository.BoardExist(request.Id))
             {
-                throw new Exception("Not Found Board");
+                throw new NotFoundException("Not Found Board");
             }
 
             var result = await _repository.DeleteBoard(request.Id);
